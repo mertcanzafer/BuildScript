@@ -23,29 +23,28 @@ if not exist "%TEX%" (
     exit /b 1
 )
 
-set "FOUND_PNG=0"
-
-for %%F in ("%TEX%\*.png") do (
-    set "FOUND_PNG=1"
-    set "INPUT=%%~fF"
-    set "OUTPUT=%%~dpnF.ktx2"
-    set "NAME=%%~nxF"
-
-    if not exist "!OUTPUT!" (
-        echo Converting !NAME! ...
-        "%KTX%" create --format R8G8B8A8_SRGB "!INPUT!" "!OUTPUT!"
-        if errorlevel 1 (
-            echo ERROR: Failed to convert !NAME!
-            pause
-            exit /b 1
+set "FOUND_TEX=0"
+for %%E in (png jpg jpeg) do (
+    for %%F in ("%TEX%\*.%%E") do (
+        set "FOUND_TEX=1"
+        set "INPUT=%%~fF"
+        set "OUTPUT=%%~dpnF.ktx2"
+        set "NAME=%%~nxF"
+        if not exist "!OUTPUT!" (
+            echo Converting !NAME! ...
+            "%KTX%" create --format R8G8B8A8_SRGB "!INPUT!" "!OUTPUT!"
+            if errorlevel 1 (
+                echo ERROR: Failed to convert !NAME!
+                pause
+                exit /b 1
+            )
+        ) else (
+            echo Skipping !NAME!, %%~nF.ktx2 already exists.
         )
-    ) else (
-        echo Skipping !NAME!, %%~nF.ktx2 already exists.
     )
 )
-
-if "%FOUND_PNG%"=="0" (
-    echo No PNG files found in:
+if "%FOUND_TEX%"=="0" (
+    echo No PNG or JPEG files found in:
     echo %TEX%
 )
 
