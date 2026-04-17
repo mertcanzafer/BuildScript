@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 set "SCRIPT_DIR=%~dp0"
 for %%I in ("%SCRIPT_DIR%..") do set "ROOT_DIR=%%~fI"
 set "BUILD_DIR=%ROOT_DIR%\build"
-set "KTX=%ROOT_DIR%\ThirdParty\ktx\Windows\x64\Release\bin\ktx.exe"
+set "KTX=%ROOT_DIR%\ThirdParty\ktx\bin\ktx.exe"
 set "TEX=%ROOT_DIR%\Assets\Textures"
 
 echo Checking texture conversions...
